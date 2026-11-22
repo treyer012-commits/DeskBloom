@@ -1,5 +1,12 @@
 # История изменений
 
+## 4.1.3
+
+- Uninstall removes global state, backups, layout cache, queued requests and empty legacy application directories.
+- Keeps user group folders, .groups documents and custom icon assets for restoration after reinstall.
+- Cleanup runs without starting the desktop UI or recreating settings; it waits for file operations to finish.
+- Added preservation, restoration, foreign-file protection and install/uninstall cleanup checks.
+
 ## 4.1.2
 
 - Per-user Windows installer with English/Russian UI, shortcuts, Explorer commands and uninstall.

@@ -12,7 +12,7 @@ Windows 10/11 with .NET Framework 4.8. Download the Setup installer from **Relea
 
 ## Your files
 
-Groups are ordinary folders, normally in **Documents\DeskBloom Groups** (or **Documents\Группы Desk Bloom**). Groups created in another folder stay there. Settings are in **Documents\DeskBloom**; each group also has a `.groups` settings file. Adding files moves them into the group. Uninstalling keeps your group files and settings.
+Groups are ordinary folders, normally in **Documents\DeskBloom Groups** (or **Documents\Группы Desk Bloom**). Groups created in another folder stay there. Settings are in **Documents\DeskBloom**; each group also has a `.groups` settings file. Adding files moves them into the group. Uninstalling removes global settings, requests and startup entries. Your group folders and `.groups` documents stay, so groups can be restored after reinstalling.
 
 ## Screenshots
 

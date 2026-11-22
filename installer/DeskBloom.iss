@@ -4,7 +4,7 @@
 #ifndef OutputDir
   #define OutputDir SourcePath + "..\artifacts"
 #endif
-#define AppVersion "4.1.2"
+#define AppVersion "4.1.3"
 #ifdef TESTBUILD
   #define ProductId "DeskBloom.SetupTest"
   #define ProductName "DeskBloom Setup Test"
@@ -12,6 +12,7 @@
   #define StartupRoot "Software\DeskBloomSetupTest\Run"
   #define DataArgs "--data """ + TestDataRoot + """ --quiet-test"
   #define ShutdownArgs "--wait-exit --data """ + TestDataRoot + """"
+  #define CleanupArgs "--remove-settings --data """ + TestDataRoot + """"
   #define OutputName "DeskBloom-Setup-Test"
 #else
   #define ProductId "DeskBloom.treyer012"
@@ -20,6 +21,7 @@
   #define StartupRoot "Software\Microsoft\Windows\CurrentVersion\Run"
   #define DataArgs ""
   #define ShutdownArgs "--wait-exit"
+  #define CleanupArgs "--remove-settings"
   #define OutputName "DeskBloom-" + AppVersion + "-Setup"
 #endif
 
@@ -64,6 +66,7 @@ english.GroupType=DeskBloom group
 english.RunNow=Run DeskBloom
 english.Busy=DeskBloom is busy moving files. Wait for it to finish, then try again.
 english.DotNet=DeskBloom needs Microsoft .NET Framework 4.8 or later. Install it and run Setup again.
+english.CleanupFailed=Could not remove the global DeskBloom settings. Close applications using those files and retry. Your group folders and .groups files are preserved.
 russian.DesktopIcon=Создать ярлык на рабочем столе
 russian.AutoStart=Запускать DeskBloom вместе с Windows
 russian.AddFiles=Добавить в группу DeskBloom...
@@ -73,6 +76,7 @@ russian.GroupType=Группа DeskBloom
 russian.RunNow=Запустить DeskBloom
 russian.Busy=DeskBloom занят переносом файлов. Дождитесь окончания и повторите попытку.
 russian.DotNet=Для DeskBloom необходим Microsoft .NET Framework 4.8 или новее. Установите его и запустите установщик снова.
+russian.CleanupFailed=Не удалось удалить общие настройки DeskBloom. Закройте приложения, использующие эти файлы, и повторите удаление. Папки групп и файлы .groups сохранены.
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:DesktopIcon}"; Flags: unchecked
@@ -159,8 +163,19 @@ end;
 
 procedure CurUninstallStepChanged(Step: TUninstallStep);
 var Command, Association: String;
+    Code: Integer;
 begin
   if Step <> usUninstall then Exit;
+  if FileExists(ExpandConstant('{app}\DeskBloom.exe')) then begin
+    if not Exec(ExpandConstant('{app}\DeskBloom.exe'), '{#CleanupArgs}', '', SW_HIDE, ewWaitUntilTerminated, Code) then begin
+      MsgBox(CustomMessage('CleanupFailed'), mbError, MB_OK);
+      Abort;
+    end;
+    if Code <> 0 then begin
+      MsgBox(CustomMessage('CleanupFailed'), mbError, MB_OK);
+      Abort;
+    end;
+  end;
   RemoveOwnedCommand('{#ClassesRoot}\*\shell\DeskBloom.Add');
   RemoveOwnedCommand('{#ClassesRoot}\Directory\shell\DeskBloom.Add');
   RemoveOwnedCommand('{#ClassesRoot}\DesktopBackground\shell\DeskBloom.NewGroup');

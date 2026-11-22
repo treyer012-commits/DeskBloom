@@ -10,8 +10,8 @@ using System.Threading;
 using Microsoft.VisualBasic.FileIO;
 using IOPath=System.IO.Path;
 
-[assembly: System.Reflection.AssemblyVersion("4.1.2.0")]
-[assembly: System.Reflection.AssemblyFileVersion("4.1.2.0")]
+[assembly: System.Reflection.AssemblyVersion("4.1.3.0")]
+[assembly: System.Reflection.AssemblyFileVersion("4.1.3.0")]
 
 namespace DeskBloom {
   [DataContract] public class GroupData {

@@ -1,4 +1,4 @@
-DESKBLOOM 4.1.1 — desktop groups for Windows
+DESKBLOOM 4.1.3 — desktop groups for Windows
 
 DeskBloom adds collapsible group panels to your normal Windows desktop.
 Your wallpaper and native Windows icons stay available.
@@ -84,3 +84,11 @@ MEMORY IN 4.1
 Software rendering reduces graphics-driver allocations for the small desktop UI.
 Animations stay enabled, up to 45 fps. Collapsed groups release their content tree.
 Tests and demo generators are excluded from the normal EXE; build with -Diagnostics to use them.
+
+UNINSTALL
+Uninstall removes shared Documents\DeskBloom settings, backups, queued requests,
+startup entries and Explorer integration. It never removes user files.
+Group folders, their .groups documents and custom icons are preserved.
+After reinstalling, groups in the standard Documents location are found automatically.
+For a group stored elsewhere, double-click its .groups document.
+User files manually stored in a legacy settings directory are preserved too.

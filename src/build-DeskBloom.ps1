@@ -24,7 +24,7 @@ $references = @('System.dll','System.Core.dll','System.Drawing.dll','System.Wind
 $vb = 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Microsoft.VisualBasic.dll'
 if (-not (Test-Path -LiteralPath $vb)) { $vb = 'C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.VisualBasic\v4.0_10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualBasic.dll' }
 $references += '/reference:' + $vb
-$diagnosticFiles=@('Tests.cs','ToggleTests.cs','OptimizationTests.cs','AppearanceTests.cs','PerformanceHarness.cs','MemoryProbe.cs','Demo.cs')
+$diagnosticFiles=@('Tests.cs','SettingsCleanupTests.cs','ToggleTests.cs','OptimizationTests.cs','AppearanceTests.cs','PerformanceHarness.cs','MemoryProbe.cs','Demo.cs')
 $sources=Get-ChildItem -LiteralPath $base -Filter '*.cs' | Where-Object {$Diagnostics -or $_.Name -notin $diagnosticFiles} | ForEach-Object {$_.FullName}
 $defines=if($Diagnostics){'/define:DIAGNOSTICS'}else{'/define:RELEASE'}
 & $compiler /nologo /target:winexe ("/platform:" + $Platform) /optimize+ /codepage:65001 $defines ('/out:' + (Join-Path $out $OutputName)) ('/win32manifest:' + (Join-Path $base 'DeskBloom.manifest')) ('/win32icon:' + (Join-Path $base 'DeskBloom.ico')) $references $sources
