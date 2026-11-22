@@ -29,8 +29,13 @@ Groups are ordinary folders, normally in **Documents\DeskBloom Groups** (or **Do
 
 </details>
 
+## Authors
+
+Developed by VAQIF with assistance from **OpenAI Codex** (AI coding assistant). The product idea, requirements, testing and release decisions are by VAQIF.
+
 ## Source and terms
 
 Source code can be viewed and used privately. **Redistribution of the program, source code, installer or modified versions requires the author's written permission.** GitHub viewing/forking rights remain governed by GitHub's terms. See [LICENSE](LICENSE).
 
 Build from source with `src\build-DeskBloom.ps1`; add `-Diagnostics` for tests and benchmarks. Installer source: [installer](installer). [Usage](docs/usage-en.txt) · [Memory measurements](docs/memory-4.1.md).
+
