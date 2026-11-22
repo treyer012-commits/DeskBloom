@@ -31,7 +31,7 @@ Groups are ordinary folders, normally in **Documents\DeskBloom Groups** (or **Do
 
 ## Authors
 
-Developed by VAQIF with assistance from **OpenAI Codex** (AI coding assistant). The product idea, requirements, testing and release decisions are by VAQIF.
+Author credit: **tru tre**, with assistance from **OpenAI Codex** (AI coding assistant).
 
 ## Source and terms
 
