@@ -1,0 +1,86 @@
+DESKBLOOM 4.1.1 — desktop groups for Windows
+
+DeskBloom adds collapsible group panels to your normal Windows desktop.
+Your wallpaper and native Windows icons stay available.
+Groups are ordinary folders in File Explorer.
+
+LANGUAGE
+Right-click the DeskBloom icon in the notification area next to the clock.
+Choose Язык / Language → English or Русский.
+Your choice is saved and applies to panels, menus, tooltips, dialogs and
+DeskBloom's File Explorer context-menu commands.
+Changing the language does not rename existing groups or move their files.
+
+GETTING STARTED
+Keep DeskBloom.exe in a permanent folder and run it.
+Right-click the desktop → Create a Desk Bloom group.
+On Windows 11 the command may be under Show more options.
+You can also create groups from the notification-area menu.
+Click a group header to expand its file grid; click again to collapse it.
+Drag the header to move the panel. Position, color and open state are saved.
+
+ADDING FILES
+Drop files or folders onto a group, or use + Files / + Folder.
+Files are physically moved. Existing names receive a numbered suffix;
+existing files are never overwritten.
+Right-click a file or app shortcut → Add to a Desk Bloom group…
+For installed apps, use an existing shortcut: Windows and Program Files
+contents must remain in their original locations.
+Double-click a file in the panel to open it with its usual application.
+Right-click a file in a panel to move it to another group or return it
+to the ordinary Windows desktop.
+
+GROUP FOLDERS
+New English installations normally use:
+  Documents\DeskBloom Groups\Group name
+Russian installations normally use:
+  Documents\Группы Desk Bloom\Group name
+Existing folder locations are retained when updating or switching languages.
+A group created in Downloads or another folder is stored in that folder.
+The main groups folder is pinned in File Explorer's Quick access.
+Open a group's real folder through ⋯ → Open group folder.
+Double-click the notification-area icon to open the main groups folder.
+
+GROUP OPTIONS
+The ⋯ menu lets you rename the group and its actual folder, change its color,
+move its folder, or remove the panel while keeping its files.
+Renaming a group folder in File Explorer is detected by the application.
+Ctrl + Alt + D shows the groups on the desktop.
+Start with Windows is available from the notification-area menu.
+
+SAVING AND RECOVERY
+Application settings: Documents\DeskBloom\state.json and its backup.
+Each group folder contains a Group name.groups settings document.
+Double-click it to display or recover the group, including a removed panel.
+Opening it again does not create a duplicate group.
+The .groups document is not an archive: back up the whole group folder.
+
+DeskBloom 3.2 has one desktop and does not capture clipboard screenshots.
+Existing files and PNGs saved by older versions are preserved.
+
+BUILDING
+See README.md and src\build-DeskBloom.ps1 in the source repository.
+Requires Windows 10/11 with .NET Framework 4.x. No network is used.
+
+
+APPEARANCE 4.0
+Group menu ⋯ → Group appearance…
+Choose from 30 icon/header colors and 30 independent background colors.
+Select one of 15 icons or Upload image… for a custom image.
+Images are scaled proportionally to at most 96 pixels. The original is preserved.
+A normalized copy lives in the hidden .deskbloom metadata folder inside the group.
+This metadata folder is excluded from the file grid. Save applies only to this group.
+Cancel discards changes.
+
+Group menu ⋯ → Rename: select a word or any part of the name.
+Choose one of 30 text colors, B (bold), I (italic) or U (underline).
+Reset formatting clears the selected text's style.
+Ctrl+B, Ctrl+I and Ctrl+U also work in the name editor.
+Use a valid Windows folder name, between 1 and 100 characters.
+Save renames the actual folder and stores styled runs in .groups.
+Copy the entire group folder, including hidden files, to preserve its custom icon.
+
+MEMORY IN 4.1
+Software rendering reduces graphics-driver allocations for the small desktop UI.
+Animations stay enabled, up to 45 fps. Collapsed groups release their content tree.
+Tests and demo generators are excluded from the normal EXE; build with -Diagnostics to use them.

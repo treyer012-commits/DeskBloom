@@ -1,0 +1,37 @@
+# Build and test output
+/artifacts/
+/bin/
+/obj/
+/.vs/
+/work/
+*.exe
+*.pdb
+*.zip
+
+# Runtime data must stay local
+state.json*
+layout-locations.json*
+*.groups
+*.desk
+*-move.json*
+*-transaction.json*
+/Screenshots/
+/Files/
+/Requests/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.user
+*.suo
+
+demo-data-*/
+
+/tools/performance-*/
+/tools/last-performance-*.txt
+
+/tools/memory-*/
+/tools/last-memory-*.txt
+
+/docs/images/

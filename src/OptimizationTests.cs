@@ -1,0 +1,32 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+
+namespace DeskBloom {
+  internal static class OptimizationTests {
+    private static void Assert(bool condition,string message){if(!condition)throw new Exception(message);}
+    private static void Pump(int ms){var frame=new DispatcherFrame();var timer=new DispatcherTimer {Interval=TimeSpan.FromMilliseconds(ms)};timer.Tick+=delegate {timer.Stop();frame.Continue=false;};timer.Start();Dispatcher.PushFrame(frame);}
+    private static void Wait(Func<bool> predicate,string message){var deadline=DateTime.UtcNow.AddSeconds(10);do {Pump(20);}while(!predicate()&&DateTime.UtcNow<deadline);Assert(predicate(),message);Pump(40);}
+    private static IEnumerable<T> Children<T>(DependencyObject root)where T:DependencyObject {for(int i=0;i<VisualTreeHelper.GetChildrenCount(root);i++){var child=VisualTreeHelper.GetChild(root,i);var match=child as T;if(match!=null)yield return match;foreach(var next in Children<T>(child))yield return next;}}
+    private static void Solid(string path,byte blue,byte red){var pixels=new byte[16*16*4];for(int i=0;i<pixels.Length;i+=4){pixels[i]=blue;pixels[i+2]=red;pixels[i+3]=255;}var image=BitmapSource.Create(16,16,96,96,PixelFormats.Bgra32,null,pixels,64);var encoder=new PngBitmapEncoder();encoder.Frames.Add(BitmapFrame.Create(image));using(var file=File.Create(path))encoder.Save(file);}
+    private static Image Load(string file){var info=new FileInfo(file);var image=new Image();IconCache.Request(new FileEntry {Path=file,Modified=info.LastWriteTimeUtc.Ticks,Length=info.Length},image);Wait(()=>IconCache.Pending==0,"icon worker completion");Assert(image.Source!=null,"decoded icon");return image;}
+    internal static void Run(MainWindow main,string directory,List<string> log){if(Environment.Is64BitOperatingSystem){string native=Environment.GetEnvironmentVariable("ProgramW6432");Assert(!string.IsNullOrEmpty(native)&&Store.ProtectedRoots.Contains(native),"native Program Files remains protected in x86 builds");}Wait(()=>main.Cards.All(c=>c.ContentReady)&&IconCache.Pending==0,"initial asynchronous content");var handles=main.GroupWindows.Select(w=>new WindowInteropHelper(w).Handle).ToArray();int tiles=Perf.FileTiles;for(int i=0;i<8;i++)main.RenderCurrent(false);Assert(handles.SequenceEqual(main.GroupWindows.Select(w=>new WindowInteropHelper(w).Handle)),"refresh must preserve HWNDs");Assert(Perf.FileTiles==tiles,"refresh must not rebuild unchanged file tiles");
+      var group=main.Data.CreateGroup("Large performance fixture");group.Open=false;for(int i=0;i<300;i++)File.WriteAllText(Path.Combine(group.FolderPath,"File "+i.ToString("000")+".txt"),"Fixture");string picture=Path.Combine(group.FolderPath,"Z-preview.png");Solid(picture,0,255);main.Data.Save();tiles=Perf.FileTiles;int icons=Perf.IconLoads;main.RenderCurrent(false);var card=main.Cards.Single(c=>c.Data==group);Wait(()=>card.ContentReady,"collapsed metadata scan");Assert(card.FileCount==301,"metadata item count");Assert(Perf.FileTiles==tiles&&Perf.IconLoads==icons,"collapsed groups must not create tiles or request icons");
+      group.Open=true;main.RenderCurrent(false);Wait(()=>card.ContentReady,"external open state");Pump(260);Assert(card.Data.Open&&Children<FileViewport>(card).Any(),"opening from tray or document displays the body");int built=Perf.FileTiles-tiles;Assert(built>0&&built<40,"only visible rows may be materialized");card.ScrollLast();Pump(100);Assert(Children<FileViewport>(card).Single().RealizedRows<=6,"bounded row count when scrolled to the end");
+      var others=main.Cards.Where(c=>c!=card).ToDictionary(c=>c,c=>c.ScanCount);File.WriteAllText(Path.Combine(group.FolderPath,"Watcher update.txt"),"Changed");Wait(()=>card.ContentReady&&card.FileCount==302,"folder watcher refresh");Assert(others.All(p=>p.Key.ScanCount==p.Value),"a changed folder must not rescan unrelated groups");
+      var first=Load(picture);var firstPixels=new byte[4];new FormatConvertedBitmap((BitmapSource)first.Source,PixelFormats.Bgra32,null,0).CopyPixels(new Int32Rect(0,0,1,1),firstPixels,4,0);Assert(firstPixels[2]==255,"original thumbnail pixels");Solid(picture,255,0);File.SetLastWriteTimeUtc(picture,DateTime.UtcNow.AddSeconds(2));var changed=Load(picture);var changedPixels=new byte[4];new FormatConvertedBitmap((BitmapSource)changed.Source,PixelFormats.Bgra32,null,0).CopyPixels(new Int32Rect(0,0,1,1),changedPixels,4,0);Assert(changedPixels[0]==255&&changedPixels[2]==0,"modified images must invalidate cached thumbnails");
+      string tall=Path.Combine(directory,"tall-thumbnail.png");var tallPixels=new byte[8*2048*4];for(int i=3;i<tallPixels.Length;i+=4)tallPixels[i]=255;var tallEncoder=new PngBitmapEncoder();tallEncoder.Frames.Add(BitmapFrame.Create(BitmapSource.Create(8,2048,96,96,PixelFormats.Bgra32,null,tallPixels,32)));using(var file=File.Create(tall))tallEncoder.Save(file);var bounded=Ui.LoadImage(tall,64);Assert(bounded.PixelHeight<=64&&bounded.PixelWidth<=64,"portrait thumbnails must be bounded on both axes");
+      string cacheFolder=Path.Combine(directory,"cache-budget");Directory.CreateDirectory(cacheFolder);for(int i=0;i<144;i++){string file=Path.Combine(cacheFolder,i.ToString()+".png");File.Copy(picture,file);Load(file);}Assert(IconCache.Count<=128,"thumbnail cache must remain bounded");
+      card.Toggle();Pump(260);Assert(!Children<FileRowView>(card).Any(),"collapsed groups release realized rows");GroupCard removed=card;PortableLayouts.Detach(main.Data,group);main.RenderCurrent(false);Assert(!main.Cards.Contains(removed)&&main.GroupWindows.Count()==handles.Length,"removing a group releases its window and card");
+      var persistent=main.Data.State.Groups[0];persistent.X+=1;main.Save();main.Close();var reloaded=new Store(main.Data.Root,main.Data.GroupsRoot,main.Data.Desktop);Assert(reloaded.State.Groups.Single(g=>g.Id==persistent.Id).X==persistent.X,"pending save must flush on close");
+      log.Add("PASS: unchanged updates reuse windows and tiles; collapsed groups load no icons; a 301-file group realizes only visible rows; scrolling stays bounded; watchers refresh only the changed group; modified thumbnails refresh; the icon cache stays within 128 entries; collapse/removal release visuals; pending state flushes on exit.");
+    }
+  }
+}

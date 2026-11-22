@@ -1,0 +1,176 @@
+{
+  "BaselineVersion": "4.0",
+  "OptimizedVersion": "4.1",
+  "Workload": "5 visible desktop panels, 18 plain-text files each; 11 appearance + 11 rename dialogs, 10 open/close cycles of all panels, idle 2.5 seconds",
+  "Baseline": [
+    {
+      "Phase": "cold",
+      "PrivateWorkingSetMB": 46.7,
+      "PrivateBytesMB": 64.45,
+      "ManagedMB": 3.63,
+      "LiveDialogs": 0,
+      "Mode": "Default",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll",
+        "D3DCOMPILER_47.dll"
+      ]
+    },
+    {
+      "Phase": "appearance",
+      "PrivateWorkingSetMB": 50.63,
+      "PrivateBytesMB": 68.82,
+      "ManagedMB": 3.35,
+      "LiveDialogs": 1,
+      "Mode": "Default",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll",
+        "D3DCOMPILER_47.dll"
+      ]
+    },
+    {
+      "Phase": "rename",
+      "PrivateWorkingSetMB": 52.22,
+      "PrivateBytesMB": 70.09,
+      "ManagedMB": 4.51,
+      "LiveDialogs": 2,
+      "Mode": "Default",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll",
+        "D3DCOMPILER_47.dll"
+      ]
+    },
+    {
+      "Phase": "dialogs",
+      "PrivateWorkingSetMB": 90.83,
+      "PrivateBytesMB": 112.79,
+      "ManagedMB": 6.79,
+      "LiveDialogs": 13,
+      "Mode": "Default",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll",
+        "D3DCOMPILER_47.dll"
+      ]
+    },
+    {
+      "Phase": "toggles",
+      "PrivateWorkingSetMB": 99.12,
+      "PrivateBytesMB": 125.41,
+      "ManagedMB": 7.08,
+      "LiveDialogs": 1,
+      "Mode": "Default",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll",
+        "D3DCOMPILER_47.dll"
+      ]
+    },
+    {
+      "Phase": "idle",
+      "PrivateWorkingSetMB": 97.32,
+      "PrivateBytesMB": 123.57,
+      "ManagedMB": 7.99,
+      "LiveDialogs": 1,
+      "Mode": "Default",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll",
+        "D3DCOMPILER_47.dll"
+      ]
+    }
+  ],
+  "Optimized": [
+    {
+      "Phase": "cold",
+      "PrivateWorkingSetMB": 15.3,
+      "PrivateBytesMB": 30.26,
+      "ManagedMB": 3.64,
+      "LiveDialogs": 0,
+      "Mode": "SoftwareOnly",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll"
+      ]
+    },
+    {
+      "Phase": "appearance",
+      "PrivateWorkingSetMB": 18.36,
+      "PrivateBytesMB": 33.26,
+      "ManagedMB": 3.34,
+      "LiveDialogs": 1,
+      "Mode": "SoftwareOnly",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll"
+      ]
+    },
+    {
+      "Phase": "rename",
+      "PrivateWorkingSetMB": 18.63,
+      "PrivateBytesMB": 33.26,
+      "ManagedMB": 4.5,
+      "LiveDialogs": 2,
+      "Mode": "SoftwareOnly",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll"
+      ]
+    },
+    {
+      "Phase": "dialogs",
+      "PrivateWorkingSetMB": 26.87,
+      "PrivateBytesMB": 41.82,
+      "ManagedMB": 6.9,
+      "LiveDialogs": 15,
+      "Mode": "SoftwareOnly",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll"
+      ]
+    },
+    {
+      "Phase": "toggles",
+      "PrivateWorkingSetMB": 27.04,
+      "PrivateBytesMB": 43.52,
+      "ManagedMB": 6.98,
+      "LiveDialogs": 1,
+      "Mode": "SoftwareOnly",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll"
+      ]
+    },
+    {
+      "Phase": "idle",
+      "PrivateWorkingSetMB": 27.41,
+      "PrivateBytesMB": 43.96,
+      "ManagedMB": 6.06,
+      "LiveDialogs": 1,
+      "Mode": "SoftwareOnly",
+      "GraphicsModules": [
+        "d3d9.dll",
+        "AMDXN32.DLL",
+        "amdihk32.dll"
+      ]
+    }
+  ],
+  "BaselineToggleCpuMs": 4375.0,
+  "OptimizedToggleCpuMs": 3109.375,
+  "LogicalProcessors": 16,
+  "ForcedGC": false,
+  "WorkingSetTrimming": false
+}

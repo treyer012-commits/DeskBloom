@@ -1,0 +1,16 @@
+[
+  {
+    "Scenario": "small",
+    "PrivateWorkingSetMB": 39.47,
+    "AfterRefreshMB": 55.6,
+    "RefreshMs": 42.85,
+    "PanelPreparationMs": 295.21
+  },
+  {
+    "Scenario": "large",
+    "PrivateWorkingSetMB": 43.52,
+    "AfterRefreshMB": 57.22,
+    "RefreshMs": 32.56,
+    "PanelPreparationMs": 362.08
+  }
+]

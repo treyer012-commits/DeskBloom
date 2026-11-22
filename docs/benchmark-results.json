@@ -1,0 +1,30 @@
+[
+  {
+    "Scenario": "small",
+    "FilesPerGroup": 12,
+    "BaselineMemoryMB": 50.86,
+    "OptimizedMemoryMB": 39.49,
+    "BaselineAfterRefreshMB": 77.12,
+    "OptimizedAfterRefreshMB": 56.1,
+    "BaselinePanelReadyMs": 426.14,
+    "OptimizedPanelReadyMs": 300.56,
+    "BaselineRefreshMs": 606.36,
+    "OptimizedRefreshMs": 32.12,
+    "BaselineIconLoads": 240,
+    "OptimizedIconLoads": 1
+  },
+  {
+    "Scenario": "large",
+    "FilesPerGroup": 120,
+    "BaselineMemoryMB": 69.44,
+    "OptimizedMemoryMB": 44.26,
+    "BaselineAfterRefreshMB": 130.56,
+    "OptimizedAfterRefreshMB": 58.24,
+    "BaselinePanelReadyMs": 1503.06,
+    "OptimizedPanelReadyMs": 350.54,
+    "BaselineRefreshMs": 4146.7,
+    "OptimizedRefreshMs": 36.48,
+    "BaselineIconLoads": 2400,
+    "OptimizedIconLoads": 1
+  }
+]
